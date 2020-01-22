@@ -1,0 +1,21 @@
+{
+  "name": "che.js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mlage/che.js.git",
+  "author": "Marcos Lage <mlage@ic.uff.br>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/polyfill": "^7.8.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-transform-async-to-generator": "^7.8.3",
+    "@babel/preset-env": "^7.8.3"
+  },
+  "scripts": {
+    "dev": "babel main.js -o bundle.js -w"
+  }
+}
