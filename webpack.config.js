@@ -7,8 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        che: path.join(__dirname, 'src/che', 'che.js'),
-        app: path.join(__dirname, 'src/app', 'app.js')
+        front: ['babel-polyfill', path.join(__dirname, 'src/front', 'app.js')],
     },
     output: {
         filename: '[name].bundle.js',
@@ -22,7 +21,7 @@ module.exports = {
             {
                 test: /\.html$/,
                 use: ['html-loader']
-            },            
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -42,7 +41,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(jpg|png|json)$/,
+                test: /\.(jpg|png)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -51,15 +50,22 @@ module.exports = {
                         }
                     }
                 ]
-            }
-
+            },
+            {
+              test: /\.(ply|off)$/i,
+              use: [
+                {
+                    loader: 'raw-loader',
+                }
+            ]
+          },
         ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/app/index.html'
+            template: 'src/front/index.html'
         }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin()
-    ]    
+    ]
 }

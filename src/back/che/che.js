@@ -8,10 +8,8 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-import { CheL0 } from "./cheL0";
-import { CheL1 } from "./cheL1";
-
-import { DataIO } from "./dataIo";
+import { CheL0 } from "./cheL0.js";
+import { CheL1 } from "./cheL1.js";
 
 export class Che {
     constructor() {
@@ -36,20 +34,11 @@ export class Che {
         return this._level3;
     }
 
-    loadCheL0(fileName) {
-        this._fileName = fileName;
+    loadCheL0(tableG, tableV) {
+        // load level 0 using mesh data
+        this._level0 = new CheL0(tableG, tableV);
 
-        // loads level zero
-        DataIO.readMesh(fileName)
-            .then((verts, trigs) => {
-                this._level0 = new CheL0(verts, trigs);            
-            })
-            .catch (() => {
-                console.log('File not found.')
-            });
-
-        // clean all levels
-        this._level0 = null
+        // clean the other levels
         this._level1 = null;
         this._level2 = null;
         this._level3 = null;
@@ -62,7 +51,7 @@ export class Che {
         this._level1 = new CheL1(this._level0);
     }
 
-    freeCheL1() {
+    cleanCheL1() {
         this._level1 = null;
     }
 }

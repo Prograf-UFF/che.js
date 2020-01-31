@@ -15,28 +15,28 @@ export class Vertex {
       this._posZ = posZ;
       this._data = data;
     }
-  
+
     get posX() {
       return this._posX;
     }
     set posX(posX) {
       this._posX = posX;
     }
-  
+
     get posY() {
       return this._posY;
     }
     set posY(posY) {
       this._posY = posY;
     }
-  
+
     get posZ() {
       return this._posZ;
     }
     set posZ(posZ) {
       this._posZ = posZ;
     }
-  
+
     get data() {
       return this._data;
     }
@@ -44,4 +44,3 @@ export class Vertex {
       this._data = data;
     }
   }
-  
