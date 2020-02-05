@@ -7,14 +7,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        front: ['babel-polyfill', path.join(__dirname, 'src/front', 'app.js')],
+        front: ['babel-polyfill', path.join(__dirname, 'app.js')],
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../../dist'),
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist')
+        contentBase: path.join(__dirname, '../../dist')
     },
     module: {
         rules: [
@@ -63,7 +63,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/front/index.html'
+            template: 'index.html'
         }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin()

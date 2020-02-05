@@ -1,0 +1,29 @@
+{
+  "name": "che.js",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mlage/che.js.git",
+  "author": "Marcos Lage <mlage@ic.uff.br>",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/polyfill": "^7.8.3",
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.18.0",
+    "nodemon": "^2.0.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "back": "nodemon index.js"
+  }
+}
