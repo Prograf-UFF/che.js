@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        front: ['babel-polyfill', path.join(__dirname, 'app.js')],
+        front: ['babel-polyfill', path.join(__dirname, 'src/app.js')],
     },
     output: {
         filename: '[name].bundle.js',
@@ -63,7 +63,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html'
+            template: 'src/index.html'
         }),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin()

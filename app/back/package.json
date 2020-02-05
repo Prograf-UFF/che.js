@@ -24,6 +24,6 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "back": "nodemon index.js"
+    "dev": "nodemon ./src/index.js"
   }
 }

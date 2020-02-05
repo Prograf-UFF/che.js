@@ -8,8 +8,8 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-import { CheL0 } from "./cheL0.js.js";
-import { CheL1 } from "./cheL1.js.js";
+import { CheL0 } from "./cheL0.js";
+import { CheL1 } from "./cheL1.js";
 
 export class Che {
     constructor() {

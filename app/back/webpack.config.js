@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: {
-        front: ['babel-polyfill', path.join(__dirname, 'index.js')],
+        front: ['babel-polyfill', path.join(__dirname, 'src/index.js')],
     },
     output: {
         filename: '[name].bundle.js',

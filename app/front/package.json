@@ -31,7 +31,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "scripts": {
-    "front": "webpack --mode=production -w",
-    "back": "nodemon src/back/server.js"
+    "prod": "webpack --mode=production",
+    "dev": "webpack -w"
   }
 }
