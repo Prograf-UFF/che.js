@@ -1,8 +1,14 @@
 export class CheL1 {
-    constructor() {
-        this._nComponent;
+  constructor(level0) {
+    this._level0 = level0;
 
-        this._tableO = [];
-        this._tableC = [];
-    }
+    this._nComponent;
+
+    this._tableO = [];
+    this._tableC = [];
+  }
+
+  isValidHalfEdge(heId) {
+    return this._level0.isValidHalfEdge(heId) && this._tableO[heId] != null;
+  }
 }

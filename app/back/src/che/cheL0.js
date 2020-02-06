@@ -28,10 +28,10 @@ export class CheL0 {
   }
 
   isValidVertex(vId) {
-    return vId >= 0 && vId < this.nVertex() && this._tableG[vid];
+    return vId >= 0 && vId < this.nVertex() && this._tableG[vid] != null;
   }
   isValidHalfEdge(heId) {
-    return heId >= 0 && heId < this.nHalfEdge() && this._tableV[heId];
+    return heId >= 0 && heId < this.nHalfEdge() && this._tableV[heId] != null;
   }
 
   getVertex(vId) {
