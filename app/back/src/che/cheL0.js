@@ -40,7 +40,7 @@ export class CheL0 {
     }
     return null;
   }
-  getHalfEdgeVertex(heId) {
+  getVertexOfHalfEdge(heId) {
     if (this.isValidHalfEdge()) {
       return this.tableV[heId];
     }
@@ -50,7 +50,7 @@ export class CheL0 {
   setVertex(vId, geometry) {
     this._tableG[vId] = geometry;
   }
-  setHalfEdgeVertex(heId, vId) {
+  setVertexOfHalfEdge(heId, vId) {
     this._tableV[heId] = vId;
   }
 
@@ -69,9 +69,9 @@ export class CheL0 {
     const verts = [];
 
     for (let heId = 0; heId < this.nHalfEdge; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vId) {
+      if (this.getVertexOfHalfEdge(heId) === vId) {
         const nextHe = this.nextHalfEdge(heId);
-        const vertHe = this.getHalfEdgeVertex(nextHe);
+        const vertHe = this.getVertexOfHalfEdge(nextHe);
 
         verts.push( vertHe );
       }
@@ -84,7 +84,7 @@ export class CheL0 {
     const halfEdges = [];
 
     for (let heId = 0; heId < this.nHalfEdge; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vId) {
+      if (this.getVertexOfHalfEdge(heId) === vId) {
         const nextHe = this.nextHalfEdge(heId);
         halfEdges.push( nextHe );
       }
@@ -97,7 +97,7 @@ export class CheL0 {
     const triangles = [];
 
     for (let heId = 0; heId < this.nHalfEdge; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vId) {
+      if (this.getVertexOfHalfEdge(heId) === vId) {
         const trigHe = this.triangle(heId);
         triangles.push( trigHe );
       }
