@@ -8,7 +8,7 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-export class Vertex {
+class Vertex {
     constructor(posX, posY, posZ, data = undefined) {
       this._posX = posX;
       this._posY = posY;
@@ -44,3 +44,6 @@ export class Vertex {
       this._data = data;
     }
   }
+
+
+module.exports = Vertex

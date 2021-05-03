@@ -1,0 +1,17 @@
+{
+  "name": "che.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "mlage",
+  "license": "MIT",
+  "dependencies": {
+    "@loaders.gl/core": "^2.3.13",
+    "@loaders.gl/ply": "^2.3.13",
+    "@loaders.gl/polyfills": "^2.3.13",
+    "node-fetch": "^2.6.1"
+  }
+}

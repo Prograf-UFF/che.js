@@ -1,6 +1,1 @@
-node_modules/
-dist/
-data/
-
-yarn.lock
-yarn-error.log
+node_modules
