@@ -81,7 +81,7 @@ class CheL0 {
       return 3 * this.triangle(heId) + (heId + 1) % 3;
     }
     return null;
-    
+
   }
   previousHalfEdge(heId) {
     return 3 * this.triangle(heId) + (heId + 2) % 3;
@@ -99,7 +99,7 @@ class CheL0 {
         const vertexNextHalfEdge = this.getHalfEdgeVertex(nextHalfEdge);
         const previousHalfEdge = this.previousHalfEdge(heId);
         const vertexPreviousHalfEdge = this.getHalfEdgeVertex(previousHalfEdge);
-        
+
         vertices.add(vertexNextHalfEdge);
         vertices.add(vertexPreviousHalfEdge);
       }
@@ -109,9 +109,10 @@ class CheL0 {
   }
 
   relation01(vId) {
+    //TODO: ask lage why this does not exist on his masters
     const halfEdges = [];
 
-    for (let heId = 0; heId < this.nHalfEdge; heId++) {
+    for (let heId = 0; heId < this.halfEdgeCount; heId++) {
       if (this.getHalfEdgeVertex(heId) === vId) {
         const nextHe = this.nextHalfEdge(heId);
         halfEdges.push(nextHe);
@@ -122,9 +123,9 @@ class CheL0 {
   }
 
   relation02(vId) {
+    // Computes the triangles of the star of a given vertex
     const triangles = [];
-
-    for (let heId = 0; heId < this.nHalfEdge; heId++) {
+    for (let heId = 0; heId < this.halfEdgeCount; heId++) {
       if (this.getHalfEdgeVertex(heId) === vId) {
         const trigHe = this.triangle(heId);
         triangles.push(trigHe);

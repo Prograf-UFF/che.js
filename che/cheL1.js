@@ -74,6 +74,7 @@ class CheL1 {
 
 
     relation00(vertexId) {
+        // Computes the vertices in the star of a given vertex.
         const vertices = new Set()
         let halfEdge = 0;
 
@@ -88,33 +89,75 @@ class CheL1 {
         let halfEdgeAux = halfEdge;
         let hasOppositeHalfEdge = true;
 
-        
+
         do {
             let nextHalfEdgeVertex = this._che.getHalfEdgeVertex(this._che.nextHalfEdge(halfEdge))
-            if (nextHalfEdgeVertex != vertexId){
+            if (nextHalfEdgeVertex != vertexId) {
                 vertices.add(nextHalfEdgeVertex);
             }
             hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) != -1
-            
+
             halfEdge = this._che.nextHalfEdge(this.getOppositeHalfEdge(halfEdge));
-            
-        } while(hasOppositeHalfEdge & (halfEdge != halfEdgeAux))
+
+        } while (hasOppositeHalfEdge & (halfEdge != halfEdgeAux))
         let previousHasOpposite = false;
-        
-        if (halfEdge != halfEdgeAux){
+
+        if (halfEdge != halfEdgeAux) {
             halfEdge = halfEdgeAux;
-            do{
-                let previousHalfEdge = this._che.previousHalfEdge(halfEdge) 
-                let previousHalfEdgeVector = this._che.getHalfEdgeVertex(previousHalfEdge)      
-                if (previousHalfEdgeVector != vertexId){
+            do {
+                let previousHalfEdge = this._che.previousHalfEdge(halfEdge)
+                let previousHalfEdgeVector = this._che.getHalfEdgeVertex(previousHalfEdge)
+                if (previousHalfEdgeVector != vertexId) {
                     vertices.add(previousHalfEdgeVector);
                 }
                 halfEdge = this.getOppositeHalfEdge(previousHalfEdge)
                 previousHasOpposite = halfEdge != -1;
-            } while(previousHasOpposite);
+            } while (previousHasOpposite);
         }
         return [...vertices];
     }
+    relation02(vertexId) {
+        // Computes the vertices in the star of a given vertex.
+        const triangles = new Set()
+        let halfEdge = 0;
+
+        //Gets the first incident half--edge
+        for (let heId = 0; heId < this._che.halfEdgeCount; heId++) {
+            if (vertexId == this._che.getHalfEdgeVertex(heId)) {
+                halfEdge = heId;
+                break;
+            }
+        }
+
+        let halfEdgeAux = halfEdge;
+        let hasOppositeHalfEdge = true;
+
+
+        do {
+
+            triangles.add(this._che.triangle(halfEdge));
+
+            hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) != -1
+
+            halfEdge = this._che.nextHalfEdge(this.getOppositeHalfEdge(halfEdge));
+
+        } while (hasOppositeHalfEdge & (halfEdge != halfEdgeAux))
+        let previousHasOpposite = false;
+
+        if (halfEdge != halfEdgeAux) {
+            halfEdge = halfEdgeAux;
+            do {
+                let previousHalfEdge = this._che.previousHalfEdge(halfEdge)
+                let previousHalfEdgeVector = this._che.getHalfEdgeVertex(previousHalfEdge)
+
+                triangles.add(this._che.triangle(halfEdge));
+                halfEdge = this.getOppositeHalfEdge(previousHalfEdge)
+                previousHasOpposite = halfEdge != -1;
+            } while (previousHasOpposite);
+        }
+        return [...triangles];
+    }
+
 }
 
 
