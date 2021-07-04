@@ -189,6 +189,27 @@ class CheL1 {
 
     }
 
+    relation12(halfEdgeId) {
+        //Computes the vertices in the star of a given edge
+        if (
+            !this._che.isValidHalfEdge(halfEdgeId) ||
+            !this._che.isValidHalfEdge(this._che.nextHalfEdge(halfEdgeId))
+        ) {
+            throw Error(`Edge Star ERROR: Invalid edge id: ${halfEdgeId}`)
+        }
+        const triangles = new Set();
+
+        triangles.add(this._che.triangle(halfEdgeId))
+        triangles.add(
+            this._che.triangle(
+                this.getOppositeHalfEdge(halfEdgeId)
+            )
+        )
+
+        return [...triangles]
+
+    }
+
 }
 
 

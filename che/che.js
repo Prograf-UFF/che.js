@@ -261,6 +261,18 @@ class Che {
         return this._level0.relation10(halfEdgeId);
     }
 
+    relation12(halfEdgeId) {
+
+        // Computes the vertices of the star of a given edge
+        if (this._level0 === null) {
+            throw Error("CHE Level 0 is not loaded.");
+        }
+        if (this._level1) {
+            return this._level1.relation12(halfEdgeId);
+        }
+        return this._level0.relation12(halfEdgeId);
+    }
+
     async loadPly(plyUrl) {
         let file = await fetchFile(plyUrl)
         let data = await parse(file.body, PLYLoader);

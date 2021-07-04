@@ -49,4 +49,15 @@ che_base.loadPly('ply_example/tetrahedron.ply').then(resposta => {
 
 
 
+  che_base.cleanCheL1()
+  console.log(`Caclculating the triangles in the star of edge: ${relationTest}`)
+  let triangleStarlvl0 = che_base.relation12(relationTest);
+  console.log(`L0: ${triangleStarlvl0}`);
+
+  che_base.loadCheL1();
+  let triangleStarlvl1 = che_base.relation12(relationTest);
+  console.log(`L1: ${triangleStarlvl1}`);
+
+
+
 })

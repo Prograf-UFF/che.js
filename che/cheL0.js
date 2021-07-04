@@ -155,6 +155,30 @@ class CheL0 {
     //transform set into array
     return [...vertices];
   }
+
+  relation12(halfEdgeId) {
+
+    //Computes the vertices in the star of a given edge
+    if (!this.isValidHalfEdge(halfEdgeId)) {
+      throw Error(`Edge Star ERROR: Invalid edge id: ${halfEdgeId}`)
+    }
+    const triangles = new Set();
+
+    let vertex = this.getHalfEdgeVertex(halfEdgeId)
+    let vertexAux = this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeId))
+
+    triangles.add(this.triangle(halfEdgeId));
+    console.log(halfEdgeId)
+    for (let halfEdgeIndex = 0; halfEdgeIndex < this.halfEdgeCount; halfEdgeIndex++) {
+      if (vertexAux == this.getHalfEdgeVertex(halfEdgeIndex) &
+        vertex == this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeIndex))) {
+        triangles.add(this.triangle(halfEdgeIndex))
+        break;
+      }
+
+    }
+    return [...triangles]
+  }
 }
 
 module.exports = CheL0
