@@ -44,18 +44,18 @@ class CheL0 {
     return 3 * this._nTriangle;
   }
 
-  isValidVertex(vId) {
+  isValidVertex(vertexId) {
     // returns False if invalid, else retursn the vertex
-    return vId >= 0 && vId < this.vertexCount && this._tableGeometry[vId];
+    return vertexId >= 0 && vertexId < this.vertexCount && this._tableGeometry[vertexId];
   }
   isValidHalfEdge(heId) {
     // Checks if a half-edge is valid
     return heId >= 0 && heId < this.halfEdgeCount && heId < this._tableVertices.length;
   }
 
-  getVertex(vId) {
-    if (this.isValidVertex(vId)) {
-      return this._tableGeometry[vId];
+  getVertex(vertexId) {
+    if (this.isValidVertex(vertexId)) {
+      return this._tableGeometry[vertexId];
     }
     return null;
   }
@@ -66,11 +66,11 @@ class CheL0 {
     return null;
   }
 
-  setVertex(vId, geometry) {
-    this._tableGeometry[vId] = geometry;
+  setVertex(vertexId, geometry) {
+    this._tableGeometry[vertexId] = geometry;
   }
-  setHalfEdgeVertex(heId, vId) {
-    this._tableVertices[heId] = vId;
+  setHalfEdgeVertex(heId, vertexId) {
+    this._tableVertices[heId] = vertexId;
   }
 
   triangle(heId) {
@@ -89,12 +89,15 @@ class CheL0 {
 
 
   relation00(vertexId) {
+    if (!this.isValidVertex(vertexId)) {
+      throw Error(`Vertex Star ERROR: Invalid vertex id: ${vertexId}`)
+    }
     const vertices = new Set();
     for (let heId = 0; heId < this.halfEdgeCount; heId++) {
       if (this.getHalfEdgeVertex(heId) === vertexId) {
 
         //The next and previous half edges are all in the same triangle
-        //Therefore, they are part of the star of vId
+        //Therefore, they are part of the star of vertexId
         const nextHalfEdge = this.nextHalfEdge(heId);
         const vertexNextHalfEdge = this.getHalfEdgeVertex(nextHalfEdge);
         const previousHalfEdge = this.previousHalfEdge(heId);
@@ -108,31 +111,49 @@ class CheL0 {
     return [...vertices];
   }
 
-  relation01(vId) {
-    //TODO: ask lage why this does not exist on his masters
-    const halfEdges = [];
 
-    for (let heId = 0; heId < this.halfEdgeCount; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vId) {
-        const nextHe = this.nextHalfEdge(heId);
-        halfEdges.push(nextHe);
-      }
+  relation02(vertexId) {
+    if (!this.isValidVertex(vertexId)) {
+      throw Error(`Vertex Star ERROR: Invalid vertex id: ${vertexId}`)
     }
-
-    return halfEdges;
-  }
-
-  relation02(vId) {
     // Computes the triangles of the star of a given vertex
     const triangles = [];
     for (let heId = 0; heId < this.halfEdgeCount; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vId) {
+      if (this.getHalfEdgeVertex(heId) === vertexId) {
         const trigHe = this.triangle(heId);
         triangles.push(trigHe);
       }
     }
 
     return triangles;
+  }
+
+  relation10(halfEdgeId) {
+    //Computes the vertices in the star of a given edge
+    if (
+      !this.isValidHalfEdge(halfEdgeId) ||
+      !this.isValidHalfEdge(this.nextHalfEdge(halfEdgeId))
+    ) {
+      throw Error(`Edge Star ERROR: Invalid edge id: ${halfEdgeId}`)
+    }
+    const vertices = new Set();
+
+    let vertex = this.getHalfEdgeVertex(halfEdgeId)
+    let vertexAux = this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeId))
+
+    vertices.add(this.getHalfEdgeVertex(this.previousHalfEdge(halfEdgeId)))
+
+    for (let halfEdgeIndex = 0; halfEdgeIndex < this.halfEdgeCount; halfEdgeIndex++) {
+      if (vertexAux == this.getHalfEdgeVertex(halfEdgeIndex) &
+        vertex == this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeIndex))) {
+        vertices.add(this.getHalfEdgeVertex(this.previousHalfEdge(halfEdgeIndex)))
+        break;
+      }
+
+    }
+
+    //transform set into array
+    return [...vertices];
   }
 }
 

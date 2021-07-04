@@ -72,6 +72,9 @@ class CheL2 {
 
   relation00(vertexId) {
     // Computes the vertices in the star of a given vertex.
+    if (!this._che.isValidVertex(vertexId)) {
+      throw Error(`Vertex Star ERROR: Invalid vertex id: ${vertexId}`)
+    }
     const vertices = new Set()
     let halfEdge = this.getVertexHalfEdge(vertexId);
     let halfEdgeAux = halfEdge
@@ -103,6 +106,39 @@ class CheL2 {
     }
     return [...vertices]
 
+  }
+
+  relation02(vertexId) {
+    // Computes the vertices in the star of a given vertex.
+    const triangles = new Set()
+    let halfEdge = this.getVertexHalfEdge(vertexId);
+    let halfEdgeAux = halfEdge
+    let hasOppositeHalfEdge = true;
+
+
+    do {
+
+      triangles.add(this._che.triangle(halfEdge));
+
+      hasOppositeHalfEdge = this._che.getOppositeHalfEdge(halfEdge) != -1
+
+      halfEdge = this._che.nextHalfEdge(this._che.getOppositeHalfEdge(halfEdge));
+
+    } while (hasOppositeHalfEdge & (halfEdge != halfEdgeAux))
+    let previousHasOpposite = false;
+
+    if (halfEdge != halfEdgeAux) {
+      halfEdge = halfEdgeAux;
+      do {
+        let previousHalfEdge = this._che.previousHalfEdge(halfEdge)
+        let previousHalfEdgeVector = this._che.getHalfEdgeVertex(previousHalfEdge)
+
+        triangles.add(this._che.triangle(halfEdge));
+        halfEdge = this._che.getOppositeHalfEdge(previousHalfEdge)
+        previousHasOpposite = halfEdge != -1;
+      } while (previousHasOpposite);
+    }
+    return [...triangles];
   }
 }
 

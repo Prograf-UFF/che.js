@@ -17,7 +17,7 @@ class CheL1 {
         this._tableConnected = [];
         this._che = che;
         this.computeOpposite();
-        this.computeConnected();
+        // this.computeConnected();
     }
 
     getOppositeHalfEdge(heId) {
@@ -56,25 +56,28 @@ class CheL1 {
         this._tableOpposite[heId] = oppositeHeId
     }
 
-    computeConnected() {
-        if (this._che.halfEdgeCount == 0 && this._che.vertexCount == 0) {
-            return null
-        }
+    // computeConnected() {
+    //     if (this._che.halfEdgeCount == 0 && this._che.vertexCount == 0) {
+    //         return null
+    //     }
 
-        this._tableConnected = new Array(this._che.triangleCount).fill(-1)
+    //     this._tableConnected = new Array(this._che.triangleCount).fill(-1)
 
-        for (let Vid = 0; Vid < this._che.triangleCount; Vid++) {
-            this.setConnected(Vid, Vid);
-        }
-    }
+    //     for (let vertexId = 0; vertexId < this._che.triangleCount; vertexId++) {
+    //         this.setConnected(vertexId, vertexId);
+    //     }
+    // }
 
-    setConnected(vertex_1, vertex_2) {
-        this._tableConnected[vertex_1] = vertex_2
-    }
+    // setConnected(vertex_1, vertex_2) {
+    //     this._tableConnected[vertex_1] = vertex_2
+    // }
 
 
     relation00(vertexId) {
         // Computes the vertices in the star of a given vertex.
+        if (!this._che.isValidVertex(vertexId)) {
+            throw Error(`Vertex Star ERROR: Invalid vertex id: ${vertexId}`)
+        }
         const vertices = new Set()
         let halfEdge = 0;
 
@@ -156,6 +159,34 @@ class CheL1 {
             } while (previousHasOpposite);
         }
         return [...triangles];
+    }
+
+
+    relation10(halfEdgeId) {
+        //Computes the vertices in the star of a given edge
+        if (
+            !this._che.isValidHalfEdge(halfEdgeId) ||
+            !this._che.isValidHalfEdge(this._che.nextHalfEdge(halfEdgeId))
+        ) {
+            throw Error(`Edge Star ERROR: Invalid edge id: ${halfEdgeId}`)
+        }
+        const vertices = new Set();
+
+        vertices.add(
+            this._che.getHalfEdgeVertex(
+                this._che.previousHalfEdge(halfEdgeId)
+            )
+        )
+        vertices.add(
+            this._che.getHalfEdgeVertex(
+                this._che.previousHalfEdge(
+                    this.getOppositeHalfEdge(halfEdgeId)
+                )
+            )
+        )
+
+        return [...vertices]
+
     }
 
 }

@@ -76,12 +76,12 @@ class Che {
         return this._level0.halfEdgeCount;
     }
 
-    isValidVertex(vId) {
+    isValidVertex(vertexId) {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
         // returns False if invalid, else retursn the vertex
-        return this._level0.isValidVertex(vId);
+        return this._level0.isValidVertex(vertexId);
     }
     isValidHalfEdge(heId) {
         if (this._level0 === null) {
@@ -91,12 +91,12 @@ class Che {
         return this._level0.isValidHalfEdge(heId);
     }
 
-    getVertex(vId) {
+    getVertex(vertexId) {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        if (this.isValidVertex(vId)) {
-            return this._tableGeometry[vId];
+        if (this.isValidVertex(vertexId)) {
+            return this._tableGeometry[vertexId];
         }
         return null;
     }
@@ -107,17 +107,17 @@ class Che {
         return this._level0.getHalfEdgeVertex(heId);
     }
 
-    setVertex(vId, geometry) {
+    setVertex(vertexId, geometry) {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        this._level0.setVertex(vId, geometry);
+        this._level0.setVertex(vertexId, geometry);
     }
-    setHalfEdgeVertex(heId, vId) {
+    setHalfEdgeVertex(heId, vertexId) {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        this._level0.setHalfEdgeVertex(heId, vId);
+        this._level0.setHalfEdgeVertex(heId, vertexId);
     }
 
     triangle(heId) {
@@ -215,47 +215,50 @@ class Che {
         return this._level3.getCurveHalfEdge(vertexId);
     }
 
-    relation00(vId) {
+    relation00(vertexId) {
         // Computes the vertices in the star of a given vertex
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        if (!this._level0.isValidVertex(vId)) {
-            throw Error(`Vertex Star ERROR: Invalid vertex id: ${vId}`)
-        }
         if (this._level2) {
-            return this._level2.relation00(vId);
+            return this._level2.relation00(vertexId);
         }
         if (this._level1) {
-            return this._level1.relation00(vId);
+            return this._level1.relation00(vertexId);
         } else {
-            return this._level0.relation00(vId);
+            return this._level0.relation00(vertexId);
         }
 
     }
 
-    relation01(vId) {
-        // Computes the half-edges in the star of a given vertex
-        if (this._level0 === null) {
-            throw Error("CHE Level 0 is not loaded.");
-        }
-
-        return this._level0.relation01(vId);
-    }
-
-    relation02(vId) {
+    relation02(vertexId) {
 
         // Computes the triangles of the star of a given vertex
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        if (!this._level0.isValidVertex(vId)) {
-            throw Error(`Vertex Star ERROR: Invalid vertex id: ${vId}`)
+        if (!this._level0.isValidVertex(vertexId)) {
+            throw Error(`Vertex Star ERROR: Invalid vertex id: ${vertexId}`)
+        }
+        if (this._level2) {
+            return this._level2.relation02(vertexId);
         }
         if (this._level1) {
-            return this._level1.relation02(vId);
+            return this._level1.relation02(vertexId);
         }
-        return this._level0.relation02(vId);
+        return this._level0.relation02(vertexId);
+    }
+
+    relation10(halfEdgeId) {
+
+        // Computes the vertices of the star of a given edge
+        if (this._level0 === null) {
+            throw Error("CHE Level 0 is not loaded.");
+        }
+        if (this._level1) {
+            return this._level1.relation10(halfEdgeId);
+        }
+        return this._level0.relation10(halfEdgeId);
     }
 
     async loadPly(plyUrl) {
