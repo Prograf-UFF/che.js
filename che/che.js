@@ -91,6 +91,14 @@ class Che {
         return this._level0.isValidHalfEdge(heId);
     }
 
+    isValidTriangle(triangleId) {
+        if (this._level0 === null) {
+            throw Error("CHE Level 0 is not loaded.");
+        }
+        // Checks if a half-edge is valid
+        return this._level0.isValidTriangle(triangleId);
+    }
+
     getVertex(vertexId) {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
@@ -271,6 +279,18 @@ class Che {
             return this._level1.relation12(halfEdgeId);
         }
         return this._level0.relation12(halfEdgeId);
+    }
+
+    relation22(halfEdgeId) {
+
+        // Computes the vertices of the star of a given edge
+        if (this._level0 === null) {
+            throw Error("CHE Level 0 is not loaded.");
+        }
+        if (this._level1) {
+            return this._level1.relation22(halfEdgeId);
+        }
+        return this._level0.relation22(halfEdgeId);
     }
 
     async loadPly(plyUrl) {

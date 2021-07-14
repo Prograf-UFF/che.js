@@ -53,6 +53,12 @@ class CheL0 {
     return heId >= 0 && heId < this.halfEdgeCount && heId < this._tableVertices.length;
   }
 
+  isValidTriangle(triangleId) {
+    return this.isValidHalfEdge(3 * triangleId) &&
+      this.isValidHalfEdge(3 * triangleId + 1) &&
+      this.isValidHalfEdge(3 * triangleId + 2)
+  }
+
   getVertex(vertexId) {
     if (this.isValidVertex(vertexId)) {
       return this._tableGeometry[vertexId];
@@ -74,7 +80,11 @@ class CheL0 {
   }
 
   triangle(heId) {
-    return Math.floor(heId / 3);
+    let triangle = Math.floor(heId / 3)
+    if (this.isValidTriangle(triangle)) {
+      return triangle;
+    }
+    return null
   }
   nextHalfEdge(heId) {
     if (this.isValidHalfEdge(heId)) {
@@ -176,6 +186,33 @@ class CheL0 {
         break;
       }
 
+    }
+    return [...triangles]
+  }
+
+
+  relation22(triangleId) {
+
+    //Computes the triangle incidents of a given triangle
+    if (!this.isValidTriangle(triangleId)) {
+      throw Error(`Triangle Star ERROR: Invalid Triangle id: ${triangleId}`)
+    }
+
+    const triangles = new Set()
+
+    let vertex1 = this.getHalfEdgeVertex(3 * triangleId)
+    let vertex2 = this.getHalfEdgeVertex(3 * triangleId + 1)
+    let vertex3 = this.getHalfEdgeVertex(3 * triangleId + 2)
+
+    for (let halfEdgeId = 0; halfEdgeId < 3 * this.triangleCount; halfEdgeId++) {
+      let iteration_vertex = this.getHalfEdgeVertex(halfEdgeId)
+      let next_vertex = this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeId))
+      if (vertex2 == iteration_vertex && vertex1 == next_vertex ||
+        vertex1 == iteration_vertex && vertex3 == next_vertex ||
+        vertex3 == iteration_vertex && vertex2 == next_vertex
+      ) {
+        triangles.add(this.triangle(halfEdgeId))
+      }
     }
     return [...triangles]
   }
