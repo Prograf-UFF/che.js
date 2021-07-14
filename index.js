@@ -1,7 +1,7 @@
 const CHE = require('./che/che')
 
 let che_base = new CHE()
-che_base.loadPly('ply_example/tetrahedron.ply').then(resposta => {
+che_base.loadPly('ply_example/opentetrahedron.ply').then(resposta => {
 
   let arg = parseInt(process.argv[2])
   let relationTest = !isNaN(arg) ? arg : 1;

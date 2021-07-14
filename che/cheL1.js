@@ -17,6 +17,7 @@ class CheL1 {
     this._tableConnected = [];
     this._che = che;
     this.computeOpposite();
+    this.orient();
     // this.computeConnected();
   }
 
@@ -72,6 +73,84 @@ class CheL1 {
   //     this._tableConnected[vertex_1] = vertex_2
   // }
 
+  orient() {
+    console.log("Orient")
+    if (this._che.vertexCount == 0 && this._che.level0._tableGeometry.length) {
+      return
+    }
+
+    let stack = []
+    let visited = []
+    for (let i = 0; i < this._che.triangleCount; i++) {
+      visited.push(false);
+    }
+
+    stack.push(0)
+    stack.push(1)
+    stack.push(2)
+
+    visited[0] = true;
+
+    while (stack.length) {
+      let halfEdge = stack.pop()
+
+      // Avoid null edges
+      let oppositeHalfEdge = this.getOppositeHalfEdge(halfEdge)
+      if (oppositeHalfEdge == -1) {
+        continue;
+      }
+
+      // Avoid loop
+      let triangle = this._che.triangle(oppositeHalfEdge)
+      if (visited[triangle]) {
+        continue;
+      }
+
+      if (!this.orient_check(halfEdge, oppositeHalfEdge)) {
+        this.orient_change(triangle)
+      }
+
+      visited[triangle] = true;
+      stack.push(3 * triangle);
+      stack.push(3 * triangle + 1);
+      stack.push(3 * triangle + 2);
+    }
+  }
+
+  orient_change(triangleId) {
+    let halfEdgeOne = 3 * triangleId;
+    let halfEdgeTwo = 3 * triangleId + 1;
+    let halfEdgeThree = 3 * triangleId + 2;
+
+    //change geometrical vertices
+    let vertexIdOne = this._che.getHalfEdgeVertex(halfEdgeOne);
+    let vertexIdTwo = this._che.getHalfEdgeVertex(halfEdgeTwo)
+    this._che.level0.setHalfEdgeVertex(halfEdgeOne, vertexIdTwo)
+    this._che.level0.setHalfEdgeVertex(halfEdgeTwo, vertexIdOne)
+
+    //inverted remaining half edges
+    let oppositeHalfEdgeTwo = this.getOppositeHalfEdge(halfEdgeTwo)
+    let oppositeHalfEdgeThree = this.getOppositeHalfEdge(halfEdgeThree)
+
+    this.setOpposite(halfEdgeTwo, oppositeHalfEdgeThree)
+    this.setOpposite(halfEdgeThree, oppositeHalfEdgeTwo)
+    this.setOpposite(oppositeHalfEdgeTwo, halfEdgeThree)
+    this.setOpposite(oppositeHalfEdgeThree, halfEdgeTwo)
+  }
+
+  orient_check(halfEdge, oppositeHalfEdge) {
+
+    let v1, v2, v3, v4;
+
+    v1 = this._che.getHalfEdgeVertex(halfEdge);
+    v2 = this._che.getHalfEdgeVertex(this._che.nextHalfEdge(halfEdge));
+
+    v3 = this._che.getHalfEdgeVertex(oppositeHalfEdge);
+    v4 = this._che.getHalfEdgeVertex(this._che.nextHalfEdge(oppositeHalfEdge));
+
+    return (v1 == v4 && v2 == v3);
+
+  }
 
   relation00(vertexId) {
     // Computes the vertices in the star of a given vertex.
@@ -222,7 +301,7 @@ class CheL1 {
     triangles.add(this._che.triangle(this.getOppositeHalfEdge(3 * triangleId + 1)))
     triangles.add(this._che.triangle(this.getOppositeHalfEdge(3 * triangleId + 2)))
 
-
+    triangles.delete(null);
     return [...triangles]
   }
 }
