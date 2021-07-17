@@ -15,16 +15,25 @@ class CheL1 {
 
     this._tableOpposite = [];
     this._tableConnected = [];
+    this._nCompounds = 0
     this._che = che;
     this.computeOpposite();
     this.orient();
-    // this.computeConnected();
+    this.computeConnected();
   }
 
   getOppositeHalfEdge(heId) {
     if (this._che.isValidHalfEdge(heId)) {
       return this._tableOpposite[heId]
     }
+  }
+
+  setNBound(nCompounds) {
+    this._nCompounds = nCompounds
+  }
+
+  get compoundCount() {
+    return this._nCompounds;
   }
 
   computeOpposite() {
@@ -57,21 +66,6 @@ class CheL1 {
     this._tableOpposite[heId] = oppositeHeId
   }
 
-  // computeConnected() {
-  //     if (this._che.halfEdgeCount == 0 && this._che.vertexCount == 0) {
-  //         return null
-  //     }
-
-  //     this._tableConnected = new Array(this._che.triangleCount).fill(-1)
-
-  //     for (let vertexId = 0; vertexId < this._che.triangleCount; vertexId++) {
-  //         this.setConnected(vertexId, vertexId);
-  //     }
-  // }
-
-  // setConnected(vertex_1, vertex_2) {
-  //     this._tableConnected[vertex_1] = vertex_2
-  // }
 
   orient() {
     console.log("Orient")
@@ -80,10 +74,7 @@ class CheL1 {
     }
 
     let stack = []
-    let visited = []
-    for (let i = 0; i < this._che.triangleCount; i++) {
-      visited.push(false);
-    }
+    let visited = new Array(this._che.triangleCount).fill(false)
 
     stack.push(0)
     stack.push(1)
@@ -150,6 +141,107 @@ class CheL1 {
 
     return (v1 == v4 && v2 == v3);
 
+  }
+
+  computeConnected() {
+    if (this._che.halfEdgeCount == 0 && this._che.vertexCount == 0) {
+      return null
+    }
+
+    this._tableConnected = new Array(this._che.vertexCount).fill(-1)
+    for (let vertexId = 0; vertexId < this._che.vertexCount; vertexId++) {
+      this.setConnected(vertexId, vertexId);
+    }
+    for (let triangleId = 0; triangleId <= this._che.triangleCount; triangleId++) {
+      if (!this._che.isValidTriangle(triangleId)) {
+        continue;
+      }
+
+      let b0 = this.getComponent(this._che.getHalfEdgeVertex(3 * triangleId));
+      let b1 = this.getComponent(this._che.getHalfEdgeVertex(3 * triangleId + 1));
+      let b2 = this.getComponent(this._che.getHalfEdgeVertex(3 * triangleId + 2));
+      if (b0 < 0 || b1 < 0 || b2 < 0) {
+        continue;
+      }
+      if (b0 < b1) {
+        if (b0 < b2) {
+          /** b0 min*/
+          this.setConnected(b1, b0);
+          this.setConnected(b2, b0);
+        } else {
+          /** b2 min*/
+          this.setConnected(b0, b2);
+          this.setConnected(b1, b2);
+        }
+      } else {
+        if (b1 < b2) {
+          /** b1 min*/
+          this.setConnected(b0, b1);
+          this.setConnected(b2, b1);
+        } else {
+          /** b2 min*/
+          this.setConnected(b0, b2);
+          this.setConnected(b1, b2);
+        }
+      }
+    }
+    this.setNBound(0);
+    const m = new Map();
+    let iterator = null;
+    for (let vertexId = 0; vertexId < this._che.vertexCount; vertexId++) {
+      if (!this._che.isValidVertex(vertexId)) {
+        continue;
+      }
+      let b = this.getComponent(vertexId)
+      // console.log(`${vertexId}: ${b}`)
+      if (b < 0) {
+        continue;
+      }
+      iterator = m.get(b)
+      if (isNaN(iterator)) {
+        m.set(b, this._nCompounds++)
+      }
+    }
+
+    for (let vertexId = 0; vertexId < this._che.vertexCount; vertexId++) {
+      if (!this._che.isValidVertex(vertexId)) {
+        continue;
+      }
+      let b = this.getCompound(vertexId)
+
+      if (b < 0) {
+        continue;
+      }
+      this.setConnected(vertexId, m.get(b))
+    }
+
+    //cout << " " << ncomp() << " connected compound(s) found." << endl;
+    console.log(`${this.compoundCount} connected compound(s) found`)
+  }
+
+  getCompound(vertexId) {
+    if (this._che.isValidVertex(vertexId)) {
+      return this._tableConnected[vertexId]
+    }
+    return null;
+  }
+
+  getComponent(compoundId) {
+    let b = this.getCompound(compoundId)
+    //console.log(`compoundId ${compoundId}, b ${b}`)
+    if (b < 0 || b == compoundId) {
+      return b
+    }
+    b = this.getComponent(b)
+    //console.log(`compoundId ${compoundId}, b ${b}`)
+    this.setConnected(compoundId, b)
+
+    return b
+  }
+
+  setConnected(vertex_1, vertex_2) {
+    if (vertex_1 >= 0 && vertex_1 < this._che.vertexCount)
+      this._tableConnected[vertex_1] = vertex_2
   }
 
   relation00(vertexId) {
@@ -285,6 +377,7 @@ class CheL1 {
       )
     )
 
+    triangles.delete(null);
     return [...triangles]
 
   }
