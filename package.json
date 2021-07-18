@@ -2,7 +2,7 @@
   "name": "che.js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "che/che.js",
   "scripts": {
     "test": "node index.js"
   },
@@ -13,5 +13,9 @@
     "@loaders.gl/ply": "^2.3.13",
     "@loaders.gl/polyfills": "^2.3.13",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "webpack": "^5.45.1",
+    "webpack-cli": "^4.7.2"
   }
 }
