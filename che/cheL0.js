@@ -128,10 +128,9 @@ class CheL0 {
     }
     // Computes the triangles of the star of a given vertex
     const triangles = [];
-    for (let heId = 0; heId < this.halfEdgeCount; heId++) {
-      if (this.getHalfEdgeVertex(heId) === vertexId) {
-        const trigHe = this.triangle(heId);
-        triangles.push(trigHe);
+    for (let heId = 0; heId < this.triangleCount * 3; ++heId) {
+      if (this.getHalfEdgeVertex(heId) == vertexId) {
+        triangles.push(this.triangle(heId));
       }
     }
 
