@@ -3,7 +3,7 @@ const CHE = require('./che/che')
 let che_base = new CHE()
 test_che()
 async function test_che() {
-  await che_base.loadPly('ply_example/opentetrahedron.ply')
+  await che_base.loadPly('ply/cylinder.ply')
 
   let arg = parseInt(process.argv[2])
   let relationTest = !isNaN(arg) ? arg : 1;
