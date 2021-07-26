@@ -4,7 +4,7 @@
   "description": "",
   "main": "che/che.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "jest"
   },
   "author": "mlage",
   "license": "MIT",
@@ -15,6 +15,8 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
     "webpack": "^5.45.1",
     "webpack-cli": "^4.7.2"
   }

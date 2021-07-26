@@ -215,6 +215,30 @@ class CheL0 {
     }
     return [...triangles]
   }
+
+  check() {
+    if (this.vertexCount != this._tableGeometry.length) {
+      console.log("CHE_L0:: Error: vertexCount != geometry table size")
+      return false;
+    }
+
+    if (3 * this.triangleCount != this._tableVertices.length) {
+      console.log("CHE_L0:: Error: triangleCount * 3 != vertex table table size")
+      return false;
+    }
+
+    for (let i = 0; i < 3 * this.triangleCount; i++) {
+      if (this.getHalfEdgeVertex(i) >= this.vertexCount) {
+        console.log(`CHE_L0:: Error V(${i})  >= vertexCount`)
+        return false
+      }
+      if (this.getHalfEdgeVertex(i) < 0) {
+        console.log(`CHE_L0:: Error V(${i})  < 0.`)
+        return false
+      }
+    }
+    return true;
+  }
 }
 
 module.exports = CheL0
