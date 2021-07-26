@@ -27,7 +27,7 @@ test('L0: Check if all Half-Edges are valid', () => {
 
 //Level 1
 test('L1: Check if L1 is loaded', async () => {
-  await che_base.loadCheL1()
+  che_base.loadCheL1()
   expect(che_base.level1).toBeTruthy();
 })
 
@@ -45,4 +45,22 @@ test('L1: Check if opposite of valid opposites is itself', async () => {
 
 test('L1: Check if triangle is oriented', async () => {
   expect(che_base.level1.checkOrientation()).toBe(true);
+})
+
+//Level 2
+test('L2: Check if L2 is loaded', async () => {
+
+  che_base.loadCheL2()
+  expect(che_base.level2).toBeTruthy();
+})
+
+
+test('L2: Check if vertex half edge table size is equal to vertexCount', async () => {
+
+  expect(che_base.level2.checkVertexfHalfEdgeTable()).toBe(true);
+})
+
+test('L2: Check if all vertex half edges have valid values', async () => {
+
+  expect(che_base.level2.checkValidVertexHalfEdge()).toBe(true);
 })

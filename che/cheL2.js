@@ -38,6 +38,7 @@ class CheL2 {
       this._che.getHalfEdgeVertex(heId)
       let oppositeHeId = this._che.getOppositeHalfEdge(heId)
       let chosenHalfEdge = this.chooseHalfEdge([heId, oppositeHeId])
+
       if (this.getEdgeHalfEdge(chosenHalfEdge) == -1) {
         this._tableEdgeMap.push(chosenHalfEdge)
       }
@@ -60,7 +61,6 @@ class CheL2 {
         this._tableVertexHalfEdge[heIdvertex] = heId
       }
     }
-
   }
 
   chooseHalfEdge(halfEdgeList) {
@@ -140,6 +140,37 @@ class CheL2 {
     }
     return [...triangles];
   }
+
+  checkVertexfHalfEdgeTable() {
+    return this._che.vertexCount == this._tableVertexHalfEdge.length
+  }
+
+  checkValidVertexHalfEdge() {
+    //Checks if all vertex half edges are valid values
+    for (let i = 0; i < this._che.vertexCount; i++) {
+      if (this.getVertexHalfEdge(i) >= 3 * this._che.triangleCount) {
+        return false;
+      }
+      if (this.getVertexHalfEdge(i) < 0) {
+        return false;
+      }
+    }
+
+    return true
+  }
+
+  checkEdgeHalfEdge() {
+    //Checks if all vertex half edges are valid values
+    for (let i = 0; i < this._tableEdgeMap.length; i++) {
+
+      if (this.getVertexHalfEdge(i) < 0) {
+        return false;
+      }
+    }
+
+    return true
+  }
+
 }
 
 
