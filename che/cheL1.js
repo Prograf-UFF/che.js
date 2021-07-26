@@ -397,6 +397,34 @@ class CheL1 {
     triangles.delete(null);
     return [...triangles]
   }
+
+
+  checkOppositeTableSize() {
+    //CHE_L1:: Erro 3*ntrig()!= O.size
+    return 3 * this._che.triangleCount == this._tableOpposite.length
+  }
+
+  checkConnectedTableSize() {
+    return this._che.vertexCount == this._tableConnected.length
+  }
+
+  checkOpposites() {
+    for (let i = 0; i < 3 * this._che.triangleCount; i++) {
+      if (this.getOppositeHalfEdge(i) >= 0 &&
+        this.getOppositeHalfEdge(this.getOppositeHalfEdge(i)) != i) {
+        return false;
+      }
+    }
+    return true;
+  }
+  checkOrientation() {
+    for (let i = 0; i < 3 * this._che.triangleCount; i++) {
+      if (this.getOppositeHalfEdge(i) >= 0 &&
+        !this.orient_check(i, this.getOppositeHalfEdge(i)))
+        return false;
+    }
+    return true;
+  }
 }
 
 
