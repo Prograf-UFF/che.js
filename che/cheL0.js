@@ -216,17 +216,26 @@ class CheL0 {
     return [...triangles]
   }
 
-  check() {
+
+  testGeometryTable() {
+    //"CHE_L0:: Error: vertexCount != geometry table size"
     if (this.vertexCount != this._tableGeometry.length) {
-      console.log("CHE_L0:: Error: vertexCount != geometry table size")
+      console.log()
       return false;
     }
+    return true
+  }
 
+  testVertexTable() {
+    //console.log("CHE_L0:: Error: triangleCount * 3 != vertex table table size")
     if (3 * this.triangleCount != this._tableVertices.length) {
-      console.log("CHE_L0:: Error: triangleCount * 3 != vertex table table size")
       return false;
     }
+    return true
+  }
 
+  testHalfEdges() {
+    //Checks if all half edges are valid
     for (let i = 0; i < 3 * this.triangleCount; i++) {
       if (this.getHalfEdgeVertex(i) >= this.vertexCount) {
         console.log(`CHE_L0:: Error V(${i})  >= vertexCount`)
@@ -237,7 +246,7 @@ class CheL0 {
         return false
       }
     }
-    return true;
+    return true
   }
 }
 
