@@ -1,0 +1,6 @@
+node_modules
+.DS_Store
+out.txt
+*.code-workspace
+ply
+testing.js
