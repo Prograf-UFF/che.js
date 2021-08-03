@@ -32,7 +32,6 @@ class CheL2 {
     halfEdgeList.sort(function (a, b) {
       return a - b;
     });
-    console.log(halfEdgeList)
     if (halfEdgeList[0] == -1) {
       halfEdgeList[0] = halfEdgeList[1]
       halfEdgeList[1] = -1
