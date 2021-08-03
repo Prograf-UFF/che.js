@@ -177,7 +177,6 @@ class CheL0 {
     let vertexAux = this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeId))
 
     triangles.add(this.triangle(halfEdgeId));
-    console.log(halfEdgeId)
     for (let halfEdgeIndex = 0; halfEdgeIndex < this.halfEdgeCount; halfEdgeIndex++) {
       if (vertexAux == this.getHalfEdgeVertex(halfEdgeIndex) &
         vertex == this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeIndex))) {
@@ -220,7 +219,6 @@ class CheL0 {
   testGeometryTable() {
     //"CHE_L0:: Error: vertexCount != geometry table size"
     if (this.vertexCount != this._tableGeometry.length) {
-      console.log()
       return false;
     }
     return true
@@ -238,11 +236,11 @@ class CheL0 {
     //Checks if all half edges are valid
     for (let i = 0; i < 3 * this.triangleCount; i++) {
       if (this.getHalfEdgeVertex(i) >= this.vertexCount) {
-        console.log(`CHE_L0:: Error V(${i})  >= vertexCount`)
+        //console.log(`CHE_L0:: Error V(${i})  >= vertexCount`)
         return false
       }
       if (this.getHalfEdgeVertex(i) < 0) {
-        console.log(`CHE_L0:: Error V(${i})  < 0.`)
+        //console.log(`CHE_L0:: Error V(${i})  < 0.`)
         return false
       }
     }

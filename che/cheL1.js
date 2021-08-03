@@ -68,7 +68,6 @@ class CheL1 {
 
 
   orient() {
-    console.log("Orient")
     if (this._che.vertexCount == 0 && this._che.level0._tableGeometry.length) {
       return
     }
@@ -216,7 +215,7 @@ class CheL1 {
     }
 
     //cout << " " << ncomp() << " connected compound(s) found." << endl;
-    console.log(`${this.compoundCount} connected compound(s) found`)
+    //console.log(`${this.compoundCount} connected compound(s) found`)
   }
 
   getCompound(vertexId) {

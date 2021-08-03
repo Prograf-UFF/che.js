@@ -45,6 +45,19 @@ class CheL3 {
     }
 
   }
+
+  checkTableCurveHalfEdge() {
+    return this._nCurves == this._tableCurveHalfEdge.length
+  }
+
+  checkOpposites() {
+    for (let halfEdgeId = 0; halfEdgeId < 3 * this._che.triangleCount; halfEdgeId++) {
+      if (this._che.getOppositeHalfEdge(halfEdgeId) < -(this._nCurves + 1)) {
+        return false;
+      }
+    }
+    return true;
+  }
 }
 
 
