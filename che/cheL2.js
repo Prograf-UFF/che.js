@@ -8,13 +8,16 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
+const {
+  javascript
+} = require("webpack");
 const Che = require("./che");
 
 class CheL2 {
   constructor(che) {
     this._nComponent;
 
-    this._tableEdgeMap = [];
+    this._EdgeMap = new Map();
     this._tableVertexHalfEdge = [];
 
     this._che = che;
@@ -23,13 +26,32 @@ class CheL2 {
     this.computeVertexHalfEdge();
   }
 
+  makePair(halfEdgeList) {
+    // Makes a pair out of a list of two half-edges
+    // Will always put the smaller valid half-edge index first
+    halfEdgeList.sort(function (a, b) {
+      return a - b;
+    });
+    console.log(halfEdgeList)
+    if (halfEdgeList[0] == -1) {
+      halfEdgeList[0] = halfEdgeList[1]
+      halfEdgeList[1] = -1
+    }
+  }
+
   getEdgeHalfEdge(heId) {
     let oppositeHeId = this._che.getOppositeHalfEdge(heId)
-    let chosenHalfEdge = this.chooseHalfEdge([heId, oppositeHeId])
-    return this._tableEdgeMap.indexOf(chosenHalfEdge)
+    let pair = [heId, oppositeHeId]
+    this.makePair(pair)
+    if (this._EdgeMap.get(pair[0])) {
+
+      return [pair[0], this._EdgeMap.get(pair[0])]
+    }
+    return -1
   }
   computeEdgeMap() {
-    this._tableEdgeMap = []
+    this._EdgeMap = new Map()
+    // this._tableEdgeMap = []
 
     for (let heId = 0; heId < this._che.halfEdgeCount; heId++) {
       if (!this._che.isValidHalfEdge(heId)) {
@@ -37,10 +59,11 @@ class CheL2 {
       }
       this._che.getHalfEdgeVertex(heId)
       let oppositeHeId = this._che.getOppositeHalfEdge(heId)
-      let chosenHalfEdge = this.chooseHalfEdge([heId, oppositeHeId])
+      let pair = [heId, oppositeHeId]
+      this.makePair(pair)
 
-      if (this.getEdgeHalfEdge(chosenHalfEdge) == -1) {
-        this._tableEdgeMap.push(chosenHalfEdge)
+      if (![...this._EdgeMap.keys()].includes(pair[0])) {
+        this._EdgeMap.set(pair[0], pair[1])
       }
     }
 
@@ -63,12 +86,6 @@ class CheL2 {
     }
   }
 
-  chooseHalfEdge(halfEdgeList) {
-    let filteredList = halfEdgeList.filter(heId => {
-      return heId > -1
-    })
-    return Math.min(...filteredList)
-  }
 
   relation00(vertexId) {
     // Computes the vertices in the star of a given vertex.

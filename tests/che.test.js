@@ -51,6 +51,7 @@ test('L1: Check if triangle is oriented', () => {
 test('L2: Check if L2 is loaded', () => {
 
   che_base.loadCheL2()
+  console.log(che_base.level2._EdgeMap)
   expect(che_base.level2).toBeTruthy();
 })
 
