@@ -156,7 +156,7 @@ class Che {
         this._level1 = new CheL1(this);
     }
 
-    cleanCheL1() {
+    cleanL1() {
         this._level1 = null;
     }
 
@@ -180,7 +180,7 @@ class Che {
         this._level2 = new CheL2(this);
     }
 
-    cleanCheL2() {
+    cleanL2() {
         this._level2 = null;
     }
 
@@ -212,7 +212,7 @@ class Che {
         this._level3 = new CheL3(this);
     }
 
-    cleanCheL3() {
+    cleanL3() {
         this._level3 = null;
     }
 
