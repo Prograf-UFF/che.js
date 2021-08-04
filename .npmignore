@@ -4,3 +4,4 @@ out.txt
 *.code-workspace
 ply
 testing.js
+.github/workflows
