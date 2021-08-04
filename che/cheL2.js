@@ -8,9 +8,6 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-const {
-  javascript
-} = require("webpack");
 const Che = require("./che");
 
 class CheL2 {
