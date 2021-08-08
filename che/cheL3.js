@@ -8,9 +8,7 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-const Che = require("./che");
-
-class CheL3 {
+export default class CheL3 {
   constructor(che) {
     this._nCurves = 0;
 
@@ -59,6 +57,3 @@ class CheL3 {
     return true;
   }
 }
-
-
-module.exports = CheL3

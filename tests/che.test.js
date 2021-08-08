@@ -1,11 +1,12 @@
-const CHE = require("../che/che")
-
-let che_base = new CHE();
+import Che from '../che/che.js'
+import fs from 'fs'
+let che_base = new Che();
 
 
 //Level 0
 test('L0: Check if L0 is loaded', async () => {
-  await che_base.loadPly('./ply/cylinder.ply');
+  let ply = fs.readFileSync('ply/cylinder.ply', 'utf-8');
+  await che_base.loadPly(ply);
   expect(che_base.level0).toBeTruthy();
 })
 test('L0: Check if vertexCount equals to geometry table size', () => {

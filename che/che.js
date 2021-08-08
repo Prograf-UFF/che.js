@@ -9,23 +9,22 @@
  */
 
 
-require('@loaders.gl/polyfills');
-const {
+import {
+    PLYLoader
+} from '@loaders.gl/ply';
+import {
     fetchFile,
     parse
-} = require('@loaders.gl/core');
-const {
-    PLYLoader
-} = require('@loaders.gl/ply');
-const chunk = require('./utils')
+} from '@loaders.gl/core';
+import chunk from "./utils.js"
+import Vertex from "./vertex.js";
 
-const Vertex = require("./vertex");
-const CheL0 = require("./cheL0.js");
-const CheL1 = require("./cheL1.js");
-const CheL2 = require("./cheL2.js");
-const CheL3 = require("./cheL3.js");
+import CheL0 from "./cheL0.js";
+import CheL1 from "./cheL1.js";
+import CheL2 from "./cheL2.js";
+import CheL3 from "./cheL3.js";
 
-class Che {
+export default class Che {
     constructor() {
         this._filename = '';
 
@@ -293,9 +292,8 @@ class Che {
         return this._level0.relation22(halfEdgeId);
     }
 
-    async loadPly(plyUrl) {
-        let file = await fetchFile(plyUrl)
-        let data = await parse(file.body, PLYLoader);
+    async loadPly(plyBody) {
+        let data = await parse(plyBody, PLYLoader);
         let vertices_coordinates = chunk(data.attributes.POSITION.value, 3);
         let vertices = [];
         for (let coordinates of vertices_coordinates) {
@@ -310,5 +308,3 @@ class Che {
             data.indices.value);
     }
 }
-
-module.exports = Che
