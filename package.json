@@ -2,6 +2,7 @@
   "name": "@che.js/che.js",
   "version": "0.0.2",
   "description": "",
+  "type": "module",
   "main": "che/che.js",
   "scripts": {
     "test": "jest"
@@ -11,11 +12,20 @@
   "dependencies": {
     "@loaders.gl/core": "^2.3.13",
     "@loaders.gl/ply": "^2.3.13",
-    "@loaders.gl/polyfills": "^2.3.13",
-    "node-fetch": "^2.6.1"
+    "@loaders.gl/polyfills": "^2.3.13"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
     "babel-jest": "^27.0.6",
     "jest": "^27.0.6"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   }
 }

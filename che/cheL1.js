@@ -8,8 +8,7 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-const Che = require("./che");
-class CheL1 {
+export default class CheL1 {
   constructor(che) {
     this._nComponent;
 
@@ -425,6 +424,3 @@ class CheL1 {
     return true;
   }
 }
-
-
-module.exports = CheL1

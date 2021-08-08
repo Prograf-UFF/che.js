@@ -8,7 +8,7 @@
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
 
-class CheL0 {
+export default class CheL0 {
 
   /** CHE_L0 Structure
    *
@@ -247,5 +247,3 @@ class CheL0 {
     return true
   }
 }
-
-module.exports = CheL0
