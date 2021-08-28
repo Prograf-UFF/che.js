@@ -343,14 +343,12 @@ export default class CheL1 {
 
     vertices.add(
       this._che.getHalfEdgeVertex(
-        this._che.previousHalfEdge(halfEdgeId)
+        halfEdgeId
       )
     )
     vertices.add(
       this._che.getHalfEdgeVertex(
-        this._che.previousHalfEdge(
-          this.getOppositeHalfEdge(halfEdgeId)
-        )
+        this._che.getOppositeHalfEdge(halfEdgeId)
       )
     )
 

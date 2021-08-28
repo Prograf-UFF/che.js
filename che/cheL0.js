@@ -150,12 +150,13 @@ export default class CheL0 {
     let vertex = this.getHalfEdgeVertex(halfEdgeId)
     let vertexAux = this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeId))
 
-    vertices.add(this.getHalfEdgeVertex(this.previousHalfEdge(halfEdgeId)))
+    vertices.add(this.getHalfEdgeVertex(halfEdgeId))
 
     for (let halfEdgeIndex = 0; halfEdgeIndex < this.halfEdgeCount; halfEdgeIndex++) {
+      //Opposites half-edge share the same two vertex, but inverted
       if (vertexAux == this.getHalfEdgeVertex(halfEdgeIndex) &
         vertex == this.getHalfEdgeVertex(this.nextHalfEdge(halfEdgeIndex))) {
-        vertices.add(this.getHalfEdgeVertex(this.previousHalfEdge(halfEdgeIndex)))
+        vertices.add(this.getHalfEdgeVertex(halfEdgeIndex))
         break;
       }
 
