@@ -103,7 +103,7 @@ export default class Che {
             throw Error("CHE Level 0 is not loaded.");
         }
         if (this.isValidVertex(vertexId)) {
-            return this._tableGeometry[vertexId];
+            return this._level0.getVertex(vertexId)
         }
         return null;
     }
@@ -132,6 +132,13 @@ export default class Che {
             throw Error("CHE Level 0 is not loaded.");
         }
         return this._level0.triangle(heId);
+    }
+
+    getTriangleCenter(triId) {
+        if (this._level0 === null) {
+            throw Error("CHE Level 0 is not loaded.");
+        }
+        return this._level0.getTriangleCenter(triId);
     }
     nextHalfEdge(heId) {
         if (this._level0 === null) {
