@@ -1,6 +1,6 @@
 {
   "name": "@che.js/che.js",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
   "type": "module",
   "main": "che/che.js",
