@@ -88,6 +88,7 @@ export default class CheL0 {
   }
 
   getTriangleCenter(triId) {
+    //Calculates the center point of a triangle
     let g1 = this.getVertex(this.getHalfEdgeVertex(triId * 3));
     let g2 = this.getVertex(this.getHalfEdgeVertex(triId * 3 + 1));
     let g3 = this.getVertex(this.getHalfEdgeVertex(triId * 3 + 2));
