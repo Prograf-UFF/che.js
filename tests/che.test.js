@@ -13,6 +13,11 @@ test('L0: Check if vertexCount equals to geometry table size', () => {
   expect(che_base.level0.vertexCount == che_base.level0._tableGeometry.length).toBe(true);
 })
 
+test('L0: Test triangle center', () => {
+  let center = che_base.level0.getTriangleCenter(0)
+  expect(center).toBeTruthy();
+})
+
 test('L0: Check if vertexCount equals to geometry table size', () => {
   expect(che_base.level0.testGeometryTable()).toBe(true);
 })
@@ -25,6 +30,11 @@ test('L0: Check if all Half-Edges are valid', () => {
   expect(che_base.level0.testHalfEdges()).toBe(true);
 })
 
+test('CHE: Get Half-Edge vertex', () => {
+
+  che_base.getVertex(che_base.getHalfEdgeVertex(3))
+  expect(che_base.getHalfEdgeVertex(3)).toBeTruthy();
+})
 
 //Level 1
 test('L1: Check if L1 is loaded', () => {
