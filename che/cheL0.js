@@ -7,7 +7,7 @@
  * Computer Science Institute
  * Prograf Lab. (http://prograf.ic.uff.br)
  */
-
+import Vertex from "./vertex.js";
 export default class CheL0 {
 
   /** CHE_L0 Structure
@@ -85,6 +85,18 @@ export default class CheL0 {
       return triangle;
     }
     return null
+  }
+
+  getTriangleCenter(triId) {
+    let g1 = this.getVertex(this.getHalfEdgeVertex(triId * 3));
+    let g2 = this.getVertex(this.getHalfEdgeVertex(triId * 3 + 1));
+    let g3 = this.getVertex(this.getHalfEdgeVertex(triId * 3 + 2));
+    return new Vertex(
+      (g1.posX + g2.posX + g3.posX) / 3,
+      (g1.posY + g2.posY + g3.posY) / 3,
+      (g1.posZ + g2.posZ + g3.posZ) / 3
+    )
+
   }
   nextHalfEdge(heId) {
     if (this.isValidHalfEdge(heId)) {
