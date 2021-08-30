@@ -30,6 +30,7 @@ export default class CheL0 {
 
     //Indices of the triangles in the mesh
     this._tableVertices = tableV;
+    this.computeNormals();
   }
 
   get vertexCount() {
@@ -229,7 +230,63 @@ export default class CheL0 {
     return [...triangles]
   }
 
+  computeNormals() {
+    let norm = []
+    let nrm = []
 
+    for (let triId = 0; triId < this._nTriangle; triId++) {
+      let triangleStartIndex = 3 * triId;
+      if (!this.isValidHalfEdge(triangleStartIndex) ||
+        !this.isValidHalfEdge(triangleStartIndex + 1) ||
+        !this.isValidHalfEdge(triangleStartIndex + 2)
+      ) {
+        throw new Error(`Compute normals ERROR: Invalid vertex. ${triangleStartIndex}`)
+      }
+      let v0 = this.getVertex(this.getHalfEdgeVertex(triangleStartIndex))
+      let v1 = this.getVertex(this.getHalfEdgeVertex(triangleStartIndex + 1))
+      let v2 = this.getVertex(this.getHalfEdgeVertex(triangleStartIndex + 2))
+
+      norm = Vertex.normal(v0, v1, v2)
+
+
+      //v0
+      nrm[0] = norm[0] + v0.nX
+      nrm[1] = norm[1] + v0.nY
+      nrm[2] = norm[2] + v0.nZ
+
+      nrm = Vertex.normalize(nrm);
+
+      v0.nX = nrm[0];
+      v0.nY = nrm[1];
+      v0.nZ = nrm[2];
+
+      //v1
+      nrm[0] = norm[0] + v1.nX
+      nrm[1] = norm[1] + v1.nY
+      nrm[2] = norm[2] + v1.nZ
+
+      nrm = Vertex.normalize(nrm);
+
+      v1.nX = nrm[0];
+      v1.nY = nrm[1];
+      v1.nZ = nrm[2];
+
+      //v2
+      nrm[0] = norm[0] + v2.nX
+      nrm[1] = norm[1] + v2.nY
+      nrm[2] = norm[2] + v2.nZ
+
+      nrm = Vertex.normalize(nrm);
+
+      v2.nX = nrm[0];
+      v2.nY = nrm[1];
+      v2.nZ = nrm[2];
+
+
+    }
+
+
+  }
   testGeometryTable() {
     //"CHE_L0:: Error: vertexCount != geometry table size"
     if (this.vertexCount != this._tableGeometry.length) {
