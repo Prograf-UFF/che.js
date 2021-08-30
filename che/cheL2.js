@@ -11,9 +11,7 @@
 
 export default class CheL2 {
   constructor(che) {
-    this._nComponent;
-
-    this._EdgeMap = new Map();
+    this._edgeMap = new Map();
     this._tableVertexHalfEdge = [];
 
     this._che = che;
@@ -38,14 +36,14 @@ export default class CheL2 {
     let oppositeHeId = this._che.getOppositeHalfEdge(heId)
     let pair = [heId, oppositeHeId]
     this.makePair(pair)
-    if (this._EdgeMap.get(pair[0])) {
+    if (this._edgeMap.get(pair[0])) {
 
-      return [pair[0], this._EdgeMap.get(pair[0])]
+      return [pair[0], this._edgeMap.get(pair[0])]
     }
     return -1
   }
   computeEdgeMap() {
-    this._EdgeMap = new Map()
+    this._edgeMap = new Map()
     // this._tableEdgeMap = []
 
     for (let heId = 0; heId < this._che.halfEdgeCount; heId++) {
@@ -57,8 +55,8 @@ export default class CheL2 {
       let pair = [heId, oppositeHeId]
       this.makePair(pair)
 
-      if (![...this._EdgeMap.keys()].includes(pair[0])) {
-        this._EdgeMap.set(pair[0], pair[1])
+      if (![...this._edgeMap.keys()].includes(pair[0])) {
+        this._edgeMap.set(pair[0], pair[1])
       }
     }
 

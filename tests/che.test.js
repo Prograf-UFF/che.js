@@ -5,7 +5,7 @@ let che_base = new Che();
 
 //Level 0
 test('L0: Check if L0 is loaded', async () => {
-  let ply = fs.readFileSync('ply/bunny.ply', 'utf-8');
+  let ply = fs.readFileSync('ply/sphere.ply', 'utf-8');
   await che_base.loadPly(ply);
   expect(che_base.level0).toBeTruthy();
 })
