@@ -1,5 +1,5 @@
 # What is che.js?
-che.js is an implementation of the Compact Half-Edge(CHE) data structure for triangular meshes in Javascript. 
+che.js is an implementation of the Compact Half-Edge(CHE) data structure for triangular meshes in Javascript. It is an upgrade on the half-edge data structure, which representes each edge as two twin-edges, each part of a triangle.
 
 
 
@@ -9,7 +9,14 @@ The main goal of che.js is to provide a scalable structure for meshes, so you ca
 che.js is split in 4 levels, each of them increasing the amount of information you have.
 
 ## Levels
-0. The first level of che.js is the 
+0. The first level of che.js is the minimal representation of a triangle, all it storages is the geometry informations about the vertices, and which vertices form each triangles.
+It does that by storing references to vertices in a table called _tableVertices, each triangle of the mesh is represented by 3 vertice references on this table.
+
+1. The second level of che.js stores the opposites of each half-edge in the mesh, which allows for fast computation of adjacency between triangles.
+
+2. The third level of the structure chooses an half-edge to represent each vertex and edge. It allows for fast discovery of adjacency with vertices, and a simple way to draw independent edges if needed.
+
+3. The fourth level adds information about the boundary curves of a mesh, representing each boundary curve with a half-edge.
 
 
 
