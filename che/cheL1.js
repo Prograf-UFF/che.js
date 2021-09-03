@@ -85,7 +85,7 @@ export default class CheL1 {
 
       // Avoid null edges
       let oppositeHalfEdge = this.getOppositeHalfEdge(halfEdge)
-      if (oppositeHalfEdge == -1) {
+      if (oppositeHalfEdge < 0) {
         continue;
       }
 
@@ -267,7 +267,7 @@ export default class CheL1 {
       if (nextHalfEdgeVertex != vertexId) {
         vertices.add(nextHalfEdgeVertex);
       }
-      hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) != -1
+      hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) >= 0
 
       halfEdge = this._che.nextHalfEdge(this.getOppositeHalfEdge(halfEdge));
 
@@ -283,7 +283,7 @@ export default class CheL1 {
           vertices.add(previousHalfEdgeVector);
         }
         halfEdge = this.getOppositeHalfEdge(previousHalfEdge)
-        previousHasOpposite = halfEdge != -1;
+        previousHasOpposite = halfEdge > -1;
       } while (previousHasOpposite);
     }
     return [...vertices];
@@ -309,7 +309,7 @@ export default class CheL1 {
 
       triangles.add(this._che.triangle(halfEdge));
 
-      hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) != -1
+      hasOppositeHalfEdge = this.getOppositeHalfEdge(halfEdge) > -1
 
       halfEdge = this._che.nextHalfEdge(this.getOppositeHalfEdge(halfEdge));
 
@@ -324,7 +324,7 @@ export default class CheL1 {
 
         triangles.add(this._che.triangle(halfEdge));
         halfEdge = this.getOppositeHalfEdge(previousHalfEdge)
-        previousHasOpposite = halfEdge != -1;
+        previousHasOpposite = halfEdge > -1;
       } while (previousHasOpposite);
     }
     return [...triangles];

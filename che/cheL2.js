@@ -14,6 +14,7 @@ export default class CheL2 {
     this._edgeMap = new Map();
     this._tableVertexHalfEdge = [];
 
+    this._nEdges = 0
     this._che = che;
 
     this.computeEdgeMap();
@@ -26,9 +27,10 @@ export default class CheL2 {
     halfEdgeList.sort(function (a, b) {
       return a - b;
     });
-    if (halfEdgeList[0] == -1) {
+    if (halfEdgeList[0] < 0) {
+      let auxHe = halfEdgeList[0]
       halfEdgeList[0] = halfEdgeList[1]
-      halfEdgeList[1] = -1
+      halfEdgeList[1] = auxHe
     }
   }
 
@@ -38,7 +40,7 @@ export default class CheL2 {
     this.makePair(pair)
     if (this._edgeMap.get(pair[0])) {
 
-      return [pair[0], this._edgeMap.get(pair[0])]
+      return this._edgeMap.get(pair[0])
     }
     return -1
   }
@@ -55,8 +57,9 @@ export default class CheL2 {
       let pair = [heId, oppositeHeId]
       this.makePair(pair)
 
-      if (![...this._edgeMap.keys()].includes(pair[0])) {
+      if (!this._edgeMap.has(pair[0])) {
         this._edgeMap.set(pair[0], pair[1])
+        this._nEdges++
       }
     }
 
@@ -71,9 +74,9 @@ export default class CheL2 {
 
     for (let heId = 0; heId < this._che.halfEdgeCount; heId++) {
       let heIdvertex = this._che.getHalfEdgeVertex(heId)
-      if (this._che.getOppositeHalfEdge(heId) == -1) {
+      if (this._che.getOppositeHalfEdge(heId) < 0) {
         this._tableVertexHalfEdge[heIdvertex] = heId
-      } else if (this.getVertexHalfEdge(heIdvertex) == -1) {
+      } else if (this.getVertexHalfEdge(heIdvertex) < 0) {
         this._tableVertexHalfEdge[heIdvertex] = heId
       }
     }
@@ -95,7 +98,7 @@ export default class CheL2 {
       if (nextHalfEdgeVertex != vertexId) {
         vertices.add(nextHalfEdgeVertex);
       }
-      hasOppositeHalfEdge = this._che.getOppositeHalfEdge(halfEdge) != -1
+      hasOppositeHalfEdge = this._che.getOppositeHalfEdge(halfEdge) > -1
 
       halfEdge = this._che.nextHalfEdge(this._che.getOppositeHalfEdge(halfEdge));
 
@@ -111,7 +114,7 @@ export default class CheL2 {
           vertices.add(previousHalfEdgeVector);
         }
         halfEdge = this._che.getOppositeHalfEdge(previousHalfEdge)
-        previousHasOpposite = halfEdge != -1;
+        previousHasOpposite = halfEdge > -1;
       } while (previousHasOpposite);
     }
     return [...vertices]
@@ -130,7 +133,7 @@ export default class CheL2 {
 
       triangles.add(this._che.triangle(halfEdge));
 
-      hasOppositeHalfEdge = this._che.getOppositeHalfEdge(halfEdge) != -1
+      hasOppositeHalfEdge = this._che.getOppositeHalfEdge(halfEdge) > -1
 
       halfEdge = this._che.nextHalfEdge(this._che.getOppositeHalfEdge(halfEdge));
 
@@ -145,7 +148,7 @@ export default class CheL2 {
 
         triangles.add(this._che.triangle(halfEdge));
         halfEdge = this._che.getOppositeHalfEdge(previousHalfEdge)
-        previousHasOpposite = halfEdge != -1;
+        previousHasOpposite = halfEdge > -1;
       } while (previousHasOpposite);
     }
     return [...triangles];
@@ -173,7 +176,7 @@ export default class CheL2 {
     //Checks if all vertex half edges are valid values
     for (let i = 0; i < this._tableEdgeMap.length; i++) {
 
-      if (this.getVertexHalfEdge(i) < 0) {
+      if (this.getEdgeHalfEdge(i) < 0) {
         return false;
       }
     }
