@@ -162,7 +162,12 @@ export default class Che {
         this._level1 = new CheL1(this);
     }
 
-    cleanL1() {
+    cleanL1(force = false) {
+        if (force) {
+            this.cleanL2(true);
+        } else if (this._level2) {
+            throw Error("You can't unload a level if a higher one is loaded.")
+        }
         this._level1 = null;
     }
 
@@ -186,7 +191,12 @@ export default class Che {
         this._level2 = new CheL2(this);
     }
 
-    cleanL2() {
+    cleanL2(force = false) {
+        if (force) {
+            this.cleanL3();
+        } else if (this._level3) {
+            throw Error("You can't unload a level if a higher one is loaded.")
+        }
         this._level2 = null;
     }
 

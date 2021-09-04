@@ -94,7 +94,35 @@ test('L3: Check if all opposites are less than nCurves', () => {
   expect(che_base.level3.checkOpposites()).toBe(true);
 })
 
+
+test('CHE: Fail unload L1', () => {
+
+  expect(che_base.cleanL1).toThrow(Error);
+})
+
+test('CHE: Force unload L1', () => {
+  che_base.cleanL1(true);
+  expect(che_base.level1).toBe(null);
+  expect(che_base.level2).toBe(null);
+  expect(che_base.level3).toBe(null);
+})
+
+test('CHE: Fail unload L2', () => {
+  che_base.loadCheL1()
+  che_base.loadCheL2()
+  che_base.loadCheL3()
+  expect(che_base.cleanL2).toThrow(Error);
+})
+
+test('CHE: Force unload L2', () => {
+  che_base.cleanL2(true);
+  expect(che_base.level2).toBe(null);
+  expect(che_base.level3).toBe(null);
+})
+
 test('CHE: Unload L3', () => {
+  che_base.loadCheL2()
+  che_base.loadCheL3()
   che_base.cleanL3()
   expect(che_base.level3).toBe(null);
 })
