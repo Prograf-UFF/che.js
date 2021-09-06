@@ -1,3 +1,6 @@
+[![NPM Package][npm]][npm-url]
+[![NPM Downloads][npm-downloads]][npmtrends-url]
+
 # What is che.js?
 che.js is an implementation of the Compact Half-Edge(CHE) data structure for triangular meshes in Javascript. It is an upgrade on the half-edge data structure, which representes each edge as two twin-edges, each part of a triangle.
 
@@ -91,3 +94,14 @@ cheMesh.loadPly(plyFile).then(() => {
 You can find more info about the data structure on the following links
 - [CHE: A scalable topological data structure for triangular meshes](https://www.academia.edu/24087960/CHE_A_scalable_topological_data_structure_for_triangular_meshes)
 - [ESTRUTURAS DE DADOS TOPOLÓGICAS ESCALONÁVEIS PARA VARIEDADES DE DIMENSÃO 2 E 3](https://www.maxwell.vrac.puc-rio.br/colecao.php?strSecao=resultado&nrSeq=8176@1) (chapter 4, in portuguese)
+
+
+### Change log ###
+
+[Releases](https://github.com/Prograf-UFF/che.js/releases)
+
+
+[npm]: https://img.shields.io/npm/v/@che.js/che.js
+[npm-url]: https://www.npmjs.com/package/@che.js/che.js
+[npm-downloads]: https://img.shields.io/npm/dw/@che.js/che.js
+[npmtrends-url]: https://www.npmtrends.com/@che.js/che.js
