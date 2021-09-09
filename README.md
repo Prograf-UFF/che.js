@@ -87,7 +87,8 @@ cheMesh.loadPly(plyFile).then(() => {
 
 
 
-
+# Wiki
+You can find documentation and examples at our [wiki](https://github.com/Prograf-UFF/che.js/wiki)
 
 
 # More info
