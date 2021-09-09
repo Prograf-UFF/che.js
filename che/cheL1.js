@@ -224,15 +224,15 @@ export default class CheL1 {
     return null;
   }
 
-  getComponent(compoundId) {
-    let b = this.getCompound(compoundId)
+  getComponent(vertexId) {
+    let b = this.getCompound(vertexId)
     //console.log(`compoundId ${compoundId}, b ${b}`)
-    if (b < 0 || b == compoundId) {
+    if (b < 0 || b == vertexId) {
       return b
     }
     b = this.getComponent(b)
     //console.log(`compoundId ${compoundId}, b ${b}`)
-    this.setConnected(compoundId, b)
+    this.setConnected(vertexId, b)
 
     return b
   }
