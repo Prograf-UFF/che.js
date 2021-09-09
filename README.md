@@ -91,6 +91,9 @@ cheMesh.loadPly(plyFile).then(() => {
 You can find documentation and examples at our [wiki](https://github.com/Prograf-UFF/che.js/wiki)
 
 
+# Demo
+You can see che.js in action on this [demo](https://moutella.github.io/che_demo/)
+
 # More info
 You can find more info about the data structure on the following links
 - [CHE: A scalable topological data structure for triangular meshes](https://www.academia.edu/24087960/CHE_A_scalable_topological_data_structure_for_triangular_meshes)
