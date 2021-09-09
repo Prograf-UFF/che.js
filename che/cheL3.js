@@ -17,8 +17,8 @@ export default class CheL3 {
     this.computeCurveHalfEdge();
   }
 
-  getCurveHalfEdge(vertexId) {
-    return this._tableVertexHalfEdge[vertexId];
+  getCurveHalfEdge(curveId) {
+    return this._tableVertexHalfEdge[curveId];
   }
   setSpecialOpposite(heId, nCurve) {
     this._che.level1.setOpposite(heId, -nCurve)
