@@ -1,0 +1,34 @@
+name: Bug Report
+description: Report a bug in the che.js library
+
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+
+  - type: input
+    id: reproduction
+    attributes:
+      label: Please provide a link to a minimal reproduction of the bug
+
+  - type: textarea
+    id: exception-or-error
+    attributes:
+      label: Please provide the exception or error you saw
+      render: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Please provide the environment you discovered this bug in
+      render: true
+      placeholder: |
+        che.js Version: 
+        Node Version: 
+        Package Manager: 
+        OS:
+        Browser: 
+        Browser Version:
