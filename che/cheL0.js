@@ -25,10 +25,12 @@ export default class CheL0 {
     this._triangleCount = tableV.length / 3;
 
     //Coordinates of each vertex of the mesh
-    this._tableGeometry = tableG;
+    this._tableGeometry = []
+    this._tableGeometry.push(...tableG);
 
     //Indices of the triangles in the mesh
-    this._tableVertices = tableV;
+    this._tableVertices = []
+    this._tableVertices.push(...tableV)
     this.computeNormals();
   }
 
@@ -112,6 +114,23 @@ export default class CheL0 {
     return 3 * this.triangle(heId) + (heId + 2) % 3;
   }
 
+  subdivide(triangleId){
+    if (!this.isValidTriangle(triangleId)){
+      throw new Error("Invalid triangle for subdivision")
+    }
+    let center = this.getTriangleCenter(triangleId)
+    let id = this._vertexCount
+    this._tableGeometry.push(center)
+    this._vertexCount+=1
+    let halfEdges = this._tableVertices.slice(3*triangleId, 3*triangleId+3)
+    this._tableVertices[3*triangleId] = id
+    for (let i = 1; i< 3; i++){
+      let copy = Array.from(halfEdges)
+      copy[i] = id
+      this._tableVertices.push(...copy)
+    }
+    this._triangleCount+=2
+  }
 
   relation00(vertexId) {
     if (!this.isValidVertex(vertexId)) {
