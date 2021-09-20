@@ -22,6 +22,14 @@ test('L0: Check if vertexCount equals to geometry table size', () => {
   expect(che_base.level0.testGeometryTable()).toBe(true);
 })
 
+
+
+test('L0: Check if subdivsion works', () => {
+  che_base.level0.subdivide(3)
+  expect(che_base.level0.testVertexTable()).toBe(true);
+})
+
+
 test('L0: Check if triangleCount * 3 equals to vertex table size', () => {
   expect(che_base.level0.testVertexTable()).toBe(true);
 })
