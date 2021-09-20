@@ -232,11 +232,11 @@ export default class Che {
         this._level3 = null;
     }
 
-    getCurveHalfEdge(vertexId) {
+    getCurveHalfEdge(curveId) {
         if (this._level3 === null) {
             throw Error("CHE Level 3 is not loaded.");
         }
-        return this._level3.getCurveHalfEdge(vertexId);
+        return this._level3.getCurveHalfEdge(curveId);
     }
 
     relation00(vertexId) {
