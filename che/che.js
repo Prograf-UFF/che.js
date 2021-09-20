@@ -66,7 +66,7 @@ export default class Che {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        return this._level0._nTriangle;
+        return this._level0._triangleCount;
     }
     get halfEdgeCount() {
         if (this._level0 === null) {

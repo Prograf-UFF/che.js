@@ -14,7 +14,7 @@ export default class CheL1 {
 
     this._tableOpposite = [];
     this._tableConnected = [];
-    this._nCompounds = 0
+    this._compoundCount = 0
     this._che = che;
     this.computeOpposite();
     this.orient();
@@ -28,11 +28,11 @@ export default class CheL1 {
   }
 
   setNBound(nCompounds) {
-    this._nCompounds = nCompounds
+    this._compoundCount = nCompounds
   }
 
   get compoundCount() {
-    return this._nCompounds;
+    return this._compoundCount;
   }
 
   computeOpposite() {
@@ -197,7 +197,7 @@ export default class CheL1 {
       }
       iterator = m.get(b)
       if (isNaN(iterator)) {
-        m.set(b, this._nCompounds++)
+        m.set(b, this._compoundCount++)
       }
     }
 
