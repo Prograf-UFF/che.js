@@ -99,6 +99,7 @@ export default class CheL0 {
     )
 
   }
+
   nextHalfEdge(heId) {
     if (this.isValidHalfEdge(heId)) {
       return 3 * this.triangle(heId) + (heId + 1) % 3;
@@ -106,6 +107,7 @@ export default class CheL0 {
     return null;
 
   }
+
   previousHalfEdge(heId) {
     return 3 * this.triangle(heId) + (heId + 2) % 3;
   }
