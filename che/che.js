@@ -66,7 +66,7 @@ export default class Che {
         if (this._level0 === null) {
             throw Error("CHE Level 0 is not loaded.");
         }
-        return this._level0._nTriangle;
+        return this._level0._triangleCount;
     }
     get halfEdgeCount() {
         if (this._level0 === null) {
@@ -238,7 +238,11 @@ export default class Che {
         }
         return this._level3.getCurveHalfEdge(curveId);
     }
-
+    /**
+     * Returns all the vertices around a vertex.
+     * @param {*} vertexId 
+     * @returns Set 
+     */
     relation00(vertexId) {
         // Computes the vertices in the star of a given vertex
         if (this._level0 === null) {
@@ -255,6 +259,11 @@ export default class Che {
 
     }
 
+    /**
+     * Returns all the triangles around a vertex.
+     * @param {*} vertexId 
+     * @returns Set 
+     */
     relation02(vertexId) {
 
         // Computes the triangles of the star of a given vertex
@@ -273,6 +282,11 @@ export default class Che {
         return this._level0.relation02(vertexId);
     }
 
+    /**
+     * Returns all the vertices around a half-edge.
+     * @param {*} halfEdgeId 
+     * @returns Set 
+     */
     relation10(halfEdgeId) {
 
         // Computes the vertices of the star of a given edge
@@ -285,6 +299,12 @@ export default class Che {
         return this._level0.relation10(halfEdgeId);
     }
 
+
+    /**
+     * Returns all the triangles around a half-edge.
+     * @param {*} halfEdgeId 
+     * @returns Set 
+     */
     relation12(halfEdgeId) {
 
         // Computes the vertices of the star of a given edge
@@ -296,7 +316,11 @@ export default class Che {
         }
         return this._level0.relation12(halfEdgeId);
     }
-
+    /**
+     * Returns all the triangles around a triangle.
+     * @param {*} halfEdgeId 
+     * @returns Set 
+     */
     relation22(halfEdgeId) {
 
         // Computes the vertices of the star of a given edge

@@ -19,11 +19,10 @@ export default class CheL0 {
 
   constructor(tableG, tableV) {
     //Number of vertices in the mesh
-    this._nVertex = tableG.length;
+    this._vertexCount = tableG.length;
 
     //Number of triangles in the mesh
-    this._nTriangle = tableV.length / 3;
-
+    this._triangleCount = tableV.length / 3;
 
     //Coordinates of each vertex of the mesh
     this._tableGeometry = tableG;
@@ -35,14 +34,14 @@ export default class CheL0 {
 
   get vertexCount() {
     //Returns the number of vertices of the model
-    return this._nVertex;
+    return this._vertexCount;
   }
   get triangleCount() {
     //Returns the number of triangles of the model
-    return this._nTriangle;
+    return this._triangleCount;
   }
   get halfEdgeCount() {
-    return 3 * this._nTriangle;
+    return 3 * this._triangleCount;
   }
 
   isValidVertex(vertexId) {
@@ -100,6 +99,7 @@ export default class CheL0 {
     )
 
   }
+
   nextHalfEdge(heId) {
     if (this.isValidHalfEdge(heId)) {
       return 3 * this.triangle(heId) + (heId + 1) % 3;
@@ -107,6 +107,7 @@ export default class CheL0 {
     return null;
 
   }
+
   previousHalfEdge(heId) {
     return 3 * this.triangle(heId) + (heId + 2) % 3;
   }
@@ -234,7 +235,7 @@ export default class CheL0 {
     let norm = []
     let nrm = []
 
-    for (let triId = 0; triId < this._nTriangle; triId++) {
+    for (let triId = 0; triId < this._triangleCount; triId++) {
       let triangleStartIndex = 3 * triId;
       if (!this.isValidHalfEdge(triangleStartIndex) ||
         !this.isValidHalfEdge(triangleStartIndex + 1) ||
